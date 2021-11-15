@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;400;600&display=swap');
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body{
+    padding-top: 40px;
+    color: rgb(43, 43, 43);
+
+}
+h1{
+    text-align: center;
+    font-family: 'Source Code Pro';
+    font-size: 44px;
+}
+section{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+.task{
+    border: 1.5px solid rgba(0, 0, 0, 0.377);
+    box-shadow: 0 0 10px rgba(0,0,0,0.4); 
+    width: 500px;
+    padding: 8px 18px 18px 18px;
+    border-radius: 20px
+
+}
+h3{
+    font-family: 'Source Code Pro';
+    font-weight: bold;
+    font-size: 12px;
+    text-align: right;
+    /* position: absolute; */
+}
+#base{
+    display: flex;
+    align-items: center;
+}
+input{
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+}
+h2{
+    font-family: 'Source Code Pro';
+    width: 400px;
+    font-size: 20px;
+}
+p{
+    padding-top: 5px;
+    font-family: 'Source Code Pro';
+    width: 200px;
+    font-size: 12px;
+    width: 100%;
+}
