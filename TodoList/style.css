@@ -1,37 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;400;600&display=swap');
-
-*{
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
-body{
+
+body {
     padding-top: 40px;
     color: rgb(43, 43, 43);
-
 }
-h1{
+
+h1 {
     text-align: center;
     font-family: 'Source Code Pro';
     font-size: 44px;
 }
-section{
-    display: flex;
 
+section {
+    display: flex;
     padding-top: 50px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.task{
+
+.task {
+    position: relative;
     border: 1.5px solid rgba(0, 0, 0, 0.3);
-    box-shadow: 8px 8px 10px   rgba(0,0,0,0.2); 
+    box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.2);
     width: 500px;
     padding: 8px 18px 18px 18px;
     margin-bottom: 20px;
     border-radius: 10px
 }
-h3{
+
+h3 {
     font-family: 'Source Code Pro';
     font-weight: bold;
     font-size: 12px;
@@ -39,22 +42,26 @@ h3{
     white-space: nowrap;
     margin-left: 8px;
 }
-.base{
+
+.base {
     display: flex;
     align-items: baseline;
 }
-input{
+
+input {
     margin-right: 10px;
     width: 15px;
     height: 15px;
     align-self: center;
 }
-h2{
+
+h2 {
     font-family: 'Source Code Pro';
     width: 400px;
     font-size: 16px;
 }
-p{
+
+p {
     padding-top: 5px;
     font-family: 'Source Code Pro';
     width: 200px;
@@ -62,10 +69,26 @@ p{
     width: 100%;
     color: rgb(131, 131, 131);
 }
-.done-task{
+
+.done-task {
     text-decoration: line-through;
     color: #C0C0C0;
 }
-.expired-date{
+
+.expired-date {
     color: rgb(197, 6, 6);
+}
+
+.description-delete {
+    display: flex;
+    padding-top: 5px;
+}
+
+.description-delete button {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    white-space: nowrap;
+    margin-left: 5px;
+    align-self: flex-end;
 }

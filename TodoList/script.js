@@ -13,6 +13,7 @@ function createTask({ title, description, deadline, done }) {
     taskDiv.className = "task";
     taskDiv.appendChild(createTitleContainer(title, done, deadline));
     taskDiv.appendChild(createDescription(description));
+    taskDiv.appendChild(createButton());
 
     return taskDiv;
 }
@@ -67,6 +68,18 @@ function createDescription(desc) {
         descOfTask.innerHTML = desc;
 
     return descOfTask;
+}
+
+function createButton(){
+    let button = document.createElement("button");
+    button.textContent = "X";
+
+    button.onclick = clickOnButton;
+    return button;
+}
+
+function clickOnButton(){
+    
 }
 
 function clickOnCheckBox() {
