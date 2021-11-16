@@ -1,21 +1,31 @@
 let tasksList = [
-    { title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-11-21', done: false },
-    { title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: false },
-    { title: 'Зроби коли зможеш!', done: false },
+    { id: 1, title: 'Зроби коли зможеш!', done: false },
+    { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: false },
+    { id: 3, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-11-21', done: false },
 
 ];
 
 let tasksContainer = document.getElementById('tasks')
 
 
-function createTask({ title, description, deadline, done }) {
+function createTask({ id, title, description, deadline, done }) {
     let taskDiv = document.createElement("div");
     taskDiv.className = "task";
+    taskDiv.id = id;
     taskDiv.appendChild(createTitleContainer(title, done, deadline));
-    taskDiv.appendChild(createDescription(description));
-    taskDiv.appendChild(createButton());
+    taskDiv.appendChild(createFooterContainer(description))
 
     return taskDiv;
+}
+
+function createFooterContainer(description) {
+    let footerDiv = document.createElement("div");
+    footerDiv.className = "description-delete";
+
+    footerDiv.appendChild(createDescription(description));
+    footerDiv.appendChild(createButton());
+
+    return footerDiv;
 }
 
 function createDeadline(deadline, done) {
@@ -28,7 +38,7 @@ function createDeadline(deadline, done) {
     }
     return deadlineOfTask;
 }
-function formatDeadline(deadline){
+function formatDeadline(deadline) {
     let date = deadline.split('-');
     return `${date[2]}.${date[1]}`;
 }
@@ -70,24 +80,26 @@ function createDescription(desc) {
     return descOfTask;
 }
 
-function createButton(){
+function createButton() {
     let button = document.createElement("button");
     button.textContent = "X";
 
-    button.onclick = clickOnButton;
+    button.onclick = clickOnDeleteButton;
     return button;
 }
 
-function clickOnButton(){
-    
+function clickOnDeleteButton() {
+    let div = this.parentNode
+    let id = tasksList.findIndex(task => task.id === +div.parentNode.id)
+    tasksList.splice(id, 1);
+    div.parentNode.remove();
 }
 
 function clickOnCheckBox() {
-    let checkBox = this;
     let title = this.parentNode.childNodes[1];
     let deadline = this.parentNode.lastChild;
 
-    if (checkBox.checked) {
+    if (this.checked) {
         title.className = "done-task";
         deadline.className = deadline.className.replace("expired-date", '');
     }
