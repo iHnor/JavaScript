@@ -1,16 +1,17 @@
 let tasksList = [
-    { title: 'Описать массив задач в JavaScript', description: "Some descript", deadline: '2021-11-21', done: false },
-    { title: 'Создать базовый макет страницы для вывода задач', deadline: '2021-11-01', done: true },
+    { title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-11-21', done: false },
+    { title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: false },
+    { title: 'Зроби коли зможеш!', done: false },
+
 ];
 
-let tasksOnPage = document.getElementById('tasks-On-Page')
+let tasksContainer = document.getElementById('tasks')
 
 
 function createTask({ title, description, deadline, done }) {
     let taskDiv = document.createElement("div");
     taskDiv.className = "task";
-    taskDiv.appendChild(createDeadline(deadline, done));
-    taskDiv.appendChild(createBaseDiv(title, done));
+    taskDiv.appendChild(createTitleContainer(title, done, deadline));
     taskDiv.appendChild(createDescription(description));
 
     return taskDiv;
@@ -18,26 +19,33 @@ function createTask({ title, description, deadline, done }) {
 
 function createDeadline(deadline, done) {
     let deadlineOfTask = document.createElement("h3");
-    if (new Date(deadline) < (new Date()) && !done)
-        deadlineOfTask.className = "expired-date"
-    deadlineOfTask.innerHTML = deadline;
+    if (deadline !== undefined) {
+        if (checkDate(deadline) && !done)
+            deadlineOfTask.className = "expired-date"
+        deadlineOfTask.innerHTML = formatDeadline(deadline);
 
+    }
     return deadlineOfTask;
 }
+function formatDeadline(deadline){
+    let date = deadline.split('-');
+    return `${date[2]}.${date[1]}`;
+}
 
-function createBaseDiv(title, done) {
+function createTitleContainer(title, done, deadline) {
     let baseDiv = document.createElement("div");
-    baseDiv.id = "base";
+    baseDiv.className = "base";
     baseDiv.appendChild(createCheckBox(done));
     baseDiv.appendChild(createTitle(title, done));
+    baseDiv.appendChild(createDeadline(deadline, done));
 
     return baseDiv;
 }
 
-function createTitle(title, done){
+function createTitle(title, done) {
     let titleOfTask = document.createElement("h2");
     titleOfTask.innerHTML = title;
-    if(done) titleOfTask.className = "done-task";
+    if (done) titleOfTask.className = "done-task";
 
     return titleOfTask;
 }
@@ -49,7 +57,7 @@ function createCheckBox(done) {
         doneOfTask.checked = 'checked';
 
     doneOfTask.onclick = clickOnCheckBox;
-        
+
     return doneOfTask;
 }
 
@@ -61,19 +69,28 @@ function createDescription(desc) {
     return descOfTask;
 }
 
-function clickOnCheckBox(){
-    let checkBox = this.parentNode.firstChild;    
-    let title = this.parentNode.lastChild;
-    
-    if (checkBox.checked){
+function clickOnCheckBox() {
+    let checkBox = this;
+    let title = this.parentNode.childNodes[1];
+    let deadline = this.parentNode.lastChild;
+
+    if (checkBox.checked) {
         title.className = "done-task";
+        deadline.className = deadline.className.replace("expired-date", '');
     }
     else {
         title.className = title.className.replace('done-task', "")
-        // перевірка дати
+        if (checkDate(deadline.innerHTML))
+            deadline.className = "expired-date";
     }
 }
 
+function checkDate(date) {
+    if (new Date(date) < new Date())
+        return true;
+    return false;
+}
+
 tasksList.forEach(t => {
-    tasksOnPage.appendChild(createTask(t));
+    tasksContainer.appendChild(createTask(t));
 });
