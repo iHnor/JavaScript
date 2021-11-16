@@ -57,4 +57,12 @@ p{
     width: 200px;
     font-size: 12px;
     width: 100%;
+    color: rgb(131, 131, 131);
+}
+.done-task{
+    text-decoration: line-through;
+    color: #C0C0C0;
+}
+.expired-date{
+    color: rgb(197, 6, 6);
 }
