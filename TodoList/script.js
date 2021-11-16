@@ -110,6 +110,16 @@ function clickOnCheckBox() {
     }
 }
 
+let showbtn = false
+function showOnlyUndone(event){
+    if(showbtn)
+        event.textContent = "Tолько открытые";
+    else
+        event.textContent = "Все";
+    showbtn = !showbtn;
+    console.log(event);
+}
+
 function checkDate(date) {
     if (new Date(date) < new Date())
         return true;

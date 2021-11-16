@@ -4,6 +4,10 @@
     padding: 0;
     margin: 0;
 }
+main{
+    display: flex;
+
+}
 
 body {
     padding-top: 40px;
@@ -18,14 +22,16 @@ h1 {
 
 section {
     display: flex;
+    width: 100%;
     padding-top: 50px;
+    padding-right: 250px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
 .task {
-    position: relative;
+    align-self: center;
     border: 1.5px solid rgba(0, 0, 0, 0.3);
     box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.2);
     width: 500px;
@@ -92,14 +98,24 @@ p {
     margin-left: 5px;
     align-self: flex-end;
 }
-button:hover{
+.description-delete button:hover{
     background-color: red;
     color: white;
 }
 .menu{
-    max-width: 20%;
+    min-width: 250px;
+    padding-top: 50px;
+    text-align: center;
 }
-.menu h2{
+.menu h3{
     text-align: center;
     font-size: 25px;
+}
+#done-button{
+    font-family: 'Source Code Pro';
+    font-size: 15px;
+    margin-top: 20px;
+    padding: 10px;
+    min-width: 150px;
+
 }
