@@ -17,7 +17,7 @@ function createTask({ id, title, description, deadline, done }) {
     taskDiv.appendChild(createTitleContainer(title, done, deadline));
     taskDiv.appendChild(createFooterContainer(description))
 
-    return taskDiv;
+    tasksContainer.appendChild(taskDiv)
 }
 
 function createFooterContainer(description) {
@@ -122,6 +122,4 @@ function isExpired(deadline) {
     return new Date(deadline).setHours(23, 59, 59) < today;
 }
 
-tasksList.forEach(t => {
-    tasksContainer.appendChild(createTask(t));
-});
+tasksList.forEach(createTask);
