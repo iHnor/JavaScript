@@ -2,7 +2,6 @@ let tasksList = [
     { id: 0, title: 'Зроби коли зможеш!', done: false },
     { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-17' },
     { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: true },
-    { id: 3, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-11-21', done: false },
     { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
 
 ];
@@ -123,3 +122,14 @@ function isExpired(deadline) {
 }
 
 tasksList.forEach(createTask);
+
+const tasksForm = document.forms['contact'];
+tasksForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(tasksForm);
+    const task = Object.fromEntries(formData.entries());
+    console.log(task);
+    tasksList.push(task);
+    createTask(task);
+    tasksForm.reset();
+})
