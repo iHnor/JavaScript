@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,13 +13,21 @@
     <h1>TodoList</h1>
     <main>
         <div class="menu">
-            <h3>Menu</h3>
+            <!-- <h3>Menu</h3> -->
             <button id="done-button" onclick="showOnlyUndone(this)">Скрыть выполененые</button>
         </div>
         <section id="tasks">
-        
+
         </section>
     </main>
+    <footer>
+        <form name="contact">
+            <input type="text" name="title" placeholder="Title">
+            <input type="text" name="description" placeholder="Description">
+            <input type="date" name="date" placeholder="Date">
+            <button type="submit">Add</button>
+        </form>
+    </footer>
     <script type="text/javascript" src="./script.js"></script>
 </body>
 

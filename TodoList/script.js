@@ -108,7 +108,7 @@ function clickOnCheckBox() {
 
 function showOnlyUndone(event) {
     let doneTasksHidden = tasksContainer.classList.toggle("hide-done");
-    event.textContent = doneTasksHidden ? "Показать все" : "Скрыть выполененые";
+    event.textContent = doneTasksHidden ? "Показать все" : "Скрыть выполненные";
 }
 
 function removeTasks(tasks) {
