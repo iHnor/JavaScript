@@ -1,7 +1,7 @@
 let tasksList = [
     { id: 0, title: 'Зроби коли зможеш!', done: false },
-    { id: 1, title: 'Зроби за сьогоднішній день!', done: true, deadline: '2021-11-17' },
-    { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: false },
+    { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-17' },
+    { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: true },
     { id: 3, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-11-21', done: false },
     { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
 
@@ -33,7 +33,7 @@ function createFooterContainer(description) {
 function createDeadline(deadline, done) {
     let deadlineOfTask = document.createElement("h3");
     if (deadline !== undefined) {
-        if (checkDate(deadline) && !done)
+        if (isExpired(deadline) && !done)
             deadlineOfTask.className = "expired-date"
         deadlineOfTask.innerHTML = formatDate(deadline);
 
@@ -96,22 +96,14 @@ function clickOnDeleteButton() {
 }
 
 function clickOnCheckBox() {
-    let title = this.parentNode.childNodes[1];
     let deadline = this.parentNode.lastChild;
     let taskNode = this.parentNode.parentNode;
 
     let id = tasksList.findIndex(task => task.id === +taskNode.id)
-    tasksList[id].done = !tasksList[id].done
-    // expired-date виправить
-    taskNode.classList.toggle('done-task', this.checked)
-    if (this.checked) {
-        deadline.className = deadline.className.replace("expired-date", '');
-
-    }
-    else {
-        if (checkDate(deadline.innerHTML))
-            deadline.className = "expired-date";
-    }
+    const task = tasksList[id];
+    task.done = !task.done;
+    taskNode.classList.toggle('done-task', task.done);
+    deadline.classList.toggle('expired-date', !task.done && isExpired(task.deadline));
 }
 
 function showOnlyUndone(event) {
@@ -125,11 +117,9 @@ function removeTasks(tasks) {
     })
 }
 
-function checkDate(date) {
+function isExpired(deadline) {
     let today = new Date();
-    if (new Date(date).setHours(23, 59, 59) < today)
-        return true;
-    return false;
+    return new Date(deadline).setHours(23, 59, 59) < today;
 }
 
 tasksList.forEach(t => {
