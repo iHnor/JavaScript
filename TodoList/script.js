@@ -42,7 +42,7 @@ function createDeadline(deadline, done) {
 }
 function formatDate(deadline) {
     let date = deadline.split('-');
-    return `${date[1]}/${date[2]}/${date[0]}`;
+    return `${date[2]}.${date[1]}`;
 }
 function createTitleContainer(title, done, deadline) {
     let baseDiv = document.createElement("div");
