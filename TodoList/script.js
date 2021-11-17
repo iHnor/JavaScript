@@ -31,6 +31,7 @@ function createFooterContainer(description) {
 
 function createDeadline(deadline, done) {
     let deadlineOfTask = document.createElement("h3");
+    // console.log(typeof(deadline));
     if (deadline !== undefined) {
         if (isExpired(deadline) && !done)
             deadlineOfTask.className = "expired-date"
@@ -127,9 +128,24 @@ const tasksForm = document.forms['contact'];
 tasksForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(tasksForm);
-    const task = Object.fromEntries(formData.entries());
+    let task = Object.fromEntries(formData.entries());
+    task = formatInputData(task);
     console.log(task);
     tasksList.push(task);
     createTask(task);
     tasksForm.reset();
 })
+
+const inc = (index = 4) => () => ++index
+const genId = inc()
+
+function formatInputData(task) {
+    if (task.deadline === '') {
+        return { id: genId(), title: task.title, description: task.description, done: false }
+    }
+    return { id: genId(), title: task.title, description: task.description, deadline: task.deadline, done: false }
+}
+
+
+// let addInputDate = document.querySelector('input[type = "date"]')
+// addInputDate.valueAsDate = new Date()

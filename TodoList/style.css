@@ -106,11 +106,9 @@ p {
 .description-delete button {
     width: 20px;
     height: 20px;
-    border-radius: 20px;
     white-space: nowrap;
     margin-left: 5px;
     align-self: flex-end;
-    border: 1px solid black;
 }
 
 .description-delete button:hover {
