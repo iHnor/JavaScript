@@ -1,11 +1,14 @@
 let tasksList = [
     { id: 1, title: 'Зроби коли зможеш!', done: false },
+    { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-17' },
     { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: false },
     { id: 3, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-11-21', done: false },
+    { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
 
 ];
 
 let tasksContainer = document.getElementById('tasks')
+let showbtn = false;
 
 
 function createTask({ id, title, description, deadline, done }) {
@@ -40,7 +43,7 @@ function createDeadline(deadline, done) {
 }
 function formatDeadline(deadline) {
     let date = deadline.split('-');
-    return `${date[2]}.${date[1]}`;
+    return `${date[1]}.${date[2]}.${date[0]}`;
 }
 
 function createTitleContainer(title, done, deadline) {
@@ -99,9 +102,14 @@ function clickOnCheckBox() {
     let title = this.parentNode.childNodes[1];
     let deadline = this.parentNode.lastChild;
 
+    let id = tasksList.findIndex(task => task.id === +this.parentNode.parentNode.id)
+    tasksList[id].done = !tasksList[id].done
+
     if (this.checked) {
         title.className = "done-task";
         deadline.className = deadline.className.replace("expired-date", '');
+        if (showbtn)
+            this.parentNode.parentNode.className = 'hide-content'
     }
     else {
         title.className = title.className.replace('done-task', "")
@@ -110,18 +118,46 @@ function clickOnCheckBox() {
     }
 }
 
-let showbtn = false
-function showOnlyUndone(event){
-    if(showbtn)
+
+function showOnlyUndone(event) {
+    
+    if (showbtn){
+        let tasks = document.querySelectorAll('.hide-content')
         event.textContent = "Tолько открытые";
-    else
+        allTasks(tasks);
+    }
+    else {
+        let tasks = document.querySelectorAll('.task')
         event.textContent = "Все";
+        onlyOpen(tasks)
+    }
     showbtn = !showbtn;
-    console.log(event);
+}
+
+function allTasks(tasks){
+    tasks.forEach(t => {
+        t.className = 'task';
+    })
+}
+
+
+function onlyOpen(tasks) {
+    tasks.forEach(t => {
+        let isDone = t.firstChild.firstChild.checked;
+        if (isDone)
+            t.className = 'hide-content'
+    })
+}
+
+function removeTasks(tasks) {
+    tasks.forEach(t => {
+        t.remove();
+    })
 }
 
 function checkDate(date) {
-    if (new Date(date) < new Date())
+    let today = new Date();
+    if (new Date(date).setHours(23, 59, 59) < today)
         return true;
     return false;
 }

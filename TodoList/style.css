@@ -119,3 +119,9 @@ p {
     min-width: 150px;
 
 }
+.hide-content{
+    display: none;
+}
+.show-content{
+    display: block;
+}
