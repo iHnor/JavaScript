@@ -76,7 +76,7 @@ p {
     color: rgb(131, 131, 131);
 }
 
-.done-task {
+.done-task h2{
     text-decoration: line-through;
     color: #C0C0C0;
 }
@@ -119,9 +119,7 @@ p {
     min-width: 150px;
 
 }
-.hide-content{
+
+.hide-done .done-task{
     display: none;
-}
-.show-content{
-    display: block;
 }
