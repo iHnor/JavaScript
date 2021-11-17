@@ -36,14 +36,14 @@ function createDeadline(deadline, done) {
     if (deadline !== undefined) {
         if (checkDate(deadline) && !done)
             deadlineOfTask.className = "expired-date"
-        deadlineOfTask.innerHTML = formatDeadline(deadline);
+        deadlineOfTask.innerHTML = formatDate(deadline);
 
     }
     return deadlineOfTask;
 }
-function formatDeadline(deadline) {
+function formatDate(deadline) {
     let date = deadline.split('-');
-    return `${date[1]}.${date[2]}.${date[0]}`;
+    return `${date[1]}/${date[2]}/${date[0]}`;
 }
 
 function createTitleContainer(title, done, deadline) {
