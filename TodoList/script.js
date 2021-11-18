@@ -89,24 +89,42 @@ function createButton() {
 function clickOnDeleteButton() {
     let div = this.parentNode
 
-    fetch(tasksEndpoint+'/'+div.parentNode.id, {
+    fetch(tasksEndpoint + '/' + div.parentNode.id, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify()
     })
-    
+
     div.parentNode.remove();
 }
 
-function clickOnCheckBox() {
+async function getElementById(pageId) {
+
+    return await fetch(tasksEndpoint)
+        .then(response => response.json())
+        .then(tasks => tasks.find(task => task.id === pageId))
+}
+
+function changeDoneValue(pageId, done){
+
+    fetch(tasksEndpoint + '/' + pageId, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ done })
+    })
+}
+
+async function clickOnCheckBox() {
     let deadline = this.parentNode.lastChild;
     let taskNode = this.parentNode.parentNode;
-
-    let id = tasksList.findIndex(task => task.id === +taskNode.id)
-    const task = tasksList[id];
+    let pageId = +taskNode.id;
+    let task = await getElementById(pageId);
     task.done = !task.done;
+    changeDoneValue(pageId, task.done);
     taskNode.classList.toggle('done-task', task.done);
     deadline.classList.toggle('expired-date', !task.done && isExpired(task.deadline));
 }
@@ -136,7 +154,7 @@ tasksForm.addEventListener('submit', (event) => {
     let task = Object.fromEntries(formData.entries());
     task = createTask(task);
     if (task.title.length !== 0) {
-        buildTask(task)
+        PostTask(task)
             .then(createAndAppendTaskNode)
             .then(_ => tasksForm.reset());
     }
@@ -145,7 +163,7 @@ tasksForm.addEventListener('submit', (event) => {
     }
 })
 
-function buildTask(task) {
+function PostTask(task) {
     return fetch(tasksEndpoint, {
         method: "Post",
         headers: {
