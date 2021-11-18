@@ -41,6 +41,7 @@ section {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-bottom: 95px;
 }
 
 .task {
