@@ -3,23 +3,16 @@
     {
       "title": "Завдання на завтра",
       "description": "Потрібно виконати до завтрашнього дня",
-      "done": false,
+      "done": true,
       "deadline": "2021-11-19",
       "id": 1
     },
     {
       "title": "Завдання з описом",
       "description": "Трішки опису до завдання",
-      "done": false,
+      "done": true,
       "deadline": "2021-11-09",
       "id": 2
-    },
-    {
-      "title": "Завдання без опису",
-      "description": "",
-      "done": false,
-      "deadline": "2021-11-18",
-      "id": 3
     }
   ]
 }

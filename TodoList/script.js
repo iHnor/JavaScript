@@ -154,7 +154,7 @@ tasksForm.addEventListener('submit', (event) => {
     let task = Object.fromEntries(formData.entries());
     task = createTask(task);
     if (task.title.length !== 0) {
-        PostTask(task)
+        postTask(task)
             .then(createAndAppendTaskNode)
             .then(_ => tasksForm.reset());
     }
@@ -163,9 +163,9 @@ tasksForm.addEventListener('submit', (event) => {
     }
 })
 
-function PostTask(task) {
+function postTask(task) {
     return fetch(tasksEndpoint, {
-        method: "Post",
+        method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
