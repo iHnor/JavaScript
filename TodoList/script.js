@@ -1,11 +1,11 @@
-let tasksList = [
-    { id: 0, title: 'Зроби коли зможеш!', done: false },
-    { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-18' },
-    { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: true },
-    { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
+// let tasksList = [
+//     { id: 0, title: 'Зроби коли зможеш!', done: false },
+//     { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-18' },
+//     { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: true },
+//     { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
 
-];
-
+// ];
+const tasksEndpoint = 'http://localhost:3000/tasks';
 let tasksContainer = document.getElementById('tasks')
 
 function createTask({ id, title, description, deadline, done }) {
@@ -120,7 +120,7 @@ function isExpired(deadline) {
     return new Date(deadline).setHours(23, 59, 59) < today;
 }
 
-tasksList.forEach(createTask);
+// tasksList.forEach(createTask);
 
 const tasksForm = document.forms['contact'];
 tasksForm.addEventListener('submit', (event) => {
@@ -147,3 +147,8 @@ function formatInputData(task) {
     }
     return { id: genId(), title: task.title, description: task.description, deadline: task.deadline, done: false }
 }
+
+
+fetch(tasksEndpoint)
+    .then(response => response.json())
+    .then(tasks => tasks.forEach(createTask))
