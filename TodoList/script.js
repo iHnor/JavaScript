@@ -99,11 +99,11 @@ function deleteTask(div) {
         .then(response => response.json())
 }
 
-async function getElementById(pageId) {
-
-    return await fetch(tasksEndpoint)
+async function getElementById(taskId) {
+    return await fetch(tasksEndpoint + '/' + taskId, {
+        method: 'GET'
+    })
         .then(response => response.json())
-        .then(tasks => tasks.find(task => task.id === pageId))
 }
 
 function changeDoneValue(pageId, done){
@@ -120,8 +120,8 @@ function changeDoneValue(pageId, done){
 async function clickOnCheckBox() {
     let deadline = this.parentNode.lastChild;
     let taskNode = this.parentNode.parentNode;
-    let pageId = +taskNode.id;
-    let task = await getElementById(pageId);
+    let taskId = +taskNode.id;
+    let task = await getElementById(taskId);
     task.done = !task.done;
     changeDoneValue(pageId, task.done);
     taskNode.classList.toggle('done-task', task.done);
