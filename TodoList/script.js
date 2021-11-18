@@ -5,7 +5,7 @@
 //     { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
 
 // ];
-const tasksEndpoint = 'http://localhost:3000/tasks';
+
 let tasksContainer = document.getElementById('tasks')
 
 function createAndAppendTaskNode({ id, title, description, deadline, done }) {
@@ -120,29 +120,38 @@ function isExpired(deadline) {
     return new Date(deadline).setHours(23, 59, 59) < today;
 }
 
-tasksList.forEach(createAndAppendTaskNode);
-
+const tasksEndpoint = 'http://localhost:3000/tasks';
 const tasksForm = document.forms['task'];
+
 tasksForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(tasksForm);
     let task = Object.fromEntries(formData.entries());
     task = createTask(task);
     if (task.title.length !== 0) {
-        tasksList.push(task);
-        createAndAppendTaskNode(task);
-        tasksForm.reset();
+        buildTask(task)
+            .then(createAndAppendTaskNode)
+            .then(_ => tasksForm.reset());
     }
     else {
         alert("Неможливо додати пусту задачу")
     }
 })
 
-const inc = (index = 4) => () => ++index
-const genId = inc()
+function buildTask(task) {
+    return fetch(tasksEndpoint, {
+        method: "Post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task)
+    })
+        .then(response => response.json())
 
-function createTask({ title, description, deadline}) {
-    let task = {id: genId(), title, description, done: false};
+}
+
+function createTask({ title, description, deadline }) {
+    let task = { title, description, done: false };
     task.deadline = deadline || undefined;
     return task;
 }
@@ -150,4 +159,4 @@ function createTask({ title, description, deadline}) {
 
 fetch(tasksEndpoint)
     .then(response => response.json())
-    .then(tasks => tasks.forEach(createTask))
+    .then(tasks => tasks.forEach(createAndAppendTaskNode))
