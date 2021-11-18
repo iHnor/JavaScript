@@ -88,16 +88,15 @@ function createButton() {
 
 function clickOnDeleteButton() {
     let div = this.parentNode
-
-    fetch(tasksEndpoint + '/' + div.parentNode.id, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify()
-    })
-
+    deleteTask(div);
     div.parentNode.remove();
+}
+
+function deleteTask(div) {
+    fetch(tasksEndpoint + '/' + div.parentNode.id, {
+        method: 'DELETE'
+    })
+        .then(response => response.json())
 }
 
 async function getElementById(pageId) {
