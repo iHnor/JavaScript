@@ -88,8 +88,15 @@ function createButton() {
 
 function clickOnDeleteButton() {
     let div = this.parentNode
-    let id = tasksList.findIndex(task => task.id === +div.parentNode.id)
-    tasksList.splice(id, 1);
+
+    fetch(tasksEndpoint+'/'+div.parentNode.id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    })
+    
     div.parentNode.remove();
 }
 
