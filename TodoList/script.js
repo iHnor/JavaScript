@@ -106,15 +106,16 @@ async function getElementById(taskId) {
         .then(response => response.json())
 }
 
-function changeDoneValue(pageId, done){
+function changeDoneValue(taskId, done) {
 
-    fetch(tasksEndpoint + '/' + pageId, {
+    fetch(tasksEndpoint + '/' + taskId, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ done })
     })
+        .then(response => response.json())
 }
 
 async function clickOnCheckBox() {
@@ -123,7 +124,7 @@ async function clickOnCheckBox() {
     let taskId = +taskNode.id;
     let task = await getElementById(taskId);
     task.done = !task.done;
-    changeDoneValue(pageId, task.done);
+    changeDoneValue(taskId, task.done);
     taskNode.classList.toggle('done-task', task.done);
     deadline.classList.toggle('expired-date', !task.done && isExpired(task.deadline));
 }
