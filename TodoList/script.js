@@ -1,6 +1,6 @@
 let tasksList = [
     { id: 0, title: 'Зроби коли зможеш!', done: false },
-    { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-17' },
+    { id: 1, title: 'Зроби за сьогоднішній день!', done: false, deadline: '2021-11-18' },
     { id: 2, title: 'Сам здогадайся про що це...', deadline: '2021-11-01', done: true },
     { id: 4, title: 'Описать массив задач в JavaScript', description: "Динамической и асинхронной загрузки частей страницы в виде HTML и данных (обычно в JSON формате)", deadline: '2021-09-21', done: false }
 
@@ -22,7 +22,6 @@ function createTask({ id, title, description, deadline, done }) {
 function createFooterContainer(description) {
     let footerDiv = document.createElement("div");
     footerDiv.className = "description-delete";
-
     footerDiv.appendChild(createDescription(description));
     footerDiv.appendChild(createButton());
 
@@ -31,7 +30,6 @@ function createFooterContainer(description) {
 
 function createDeadline(deadline, done) {
     let deadlineOfTask = document.createElement("h3");
-    // console.log(typeof(deadline));
     if (deadline !== undefined) {
         if (isExpired(deadline) && !done)
             deadlineOfTask.className = "expired-date"
@@ -130,10 +128,14 @@ tasksForm.addEventListener('submit', (event) => {
     const formData = new FormData(tasksForm);
     let task = Object.fromEntries(formData.entries());
     task = formatInputData(task);
-    console.log(task);
-    tasksList.push(task);
-    createTask(task);
-    tasksForm.reset();
+    if (task.title.length !== 0){
+        tasksList.push(task);
+        createTask(task);
+        tasksForm.reset();
+    }
+    else{
+        alert("Неможливо додати пусту задачу")
+    }
 })
 
 const inc = (index = 4) => () => ++index
@@ -145,7 +147,3 @@ function formatInputData(task) {
     }
     return { id: genId(), title: task.title, description: task.description, deadline: task.deadline, done: false }
 }
-
-
-// let addInputDate = document.querySelector('input[type = "date"]')
-// addInputDate.valueAsDate = new Date()
